@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ermai"
+version = "1.0.0"
+description = "Official ErmAI Python Library"
+authors = [{name = "Gabyface910"}]
+requires-python = ">=3.7"
+dependencies = [
+    "requests",
+    "groq",
+    "Pillow"
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
