@@ -6,8 +6,10 @@ from datetime import datetime
 from groq import Groq
 from PIL import Image
 
+# This is the ErmAI suite. Have fun!
+
 class ChatGPSimon:
-    """The flagship ErmAI Persona with custom branding and memory."""
+    # The flagship ErmAI Persona with custom branding and memory.
     def __init__(self, api_key):
         self.client = Groq(api_key=api_key)
         self.model = "llama-3.3-70b-versatile"
@@ -40,7 +42,7 @@ class ChatGPSimon:
         )
         self.memory = [{"role": "system", "content": self.system_prompt}]
 
-    def ask(self, query: str) -> str:
+    def prompt(self, query: str) -> str:
         """Standard professional return. Best for background tasks."""
         self.memory.append({"role": "user", "content": query})
         completion = self.client.chat.completions.create(
@@ -50,28 +52,14 @@ class ChatGPSimon:
         self.memory.append({"role": "assistant", "content": response})
         return response
 
-    def ask_stream(self, query: str):
-        """Generator for UI streaming. Saves to memory automatically upon completion."""
-        self.memory.append({"role": "user", "content": query})
-        completion = self.client.chat.completions.create(
-            model=self.model, messages=self.memory, stream=True
-        )
-        full_res = ""
-        for chunk in completion:
-            content = chunk.choices[0].delta.content
-            if content:
-                full_res += content
-                yield content
-        self.memory.append({"role": "assistant", "content": full_res})
-
-class AI4:
-    """Lightweight general-purpose assistant (optimized for Pi performance)."""
-    def __init__(self, api_key, system_prompt="You are a helpful assistant."):
+class Lumina:
+    # Lightweight general-purpose assistant.
+    def __init__(self, api_key, instruction="You are a helpful assistant."):
         self.client = Groq(api_key=api_key)
         self.model = "llama-3.1-8b-instant"
-        self.memory = [{"role": "system", "content": system_prompt}]
+        self.memory = [{"role": "system", "content": instruction}]
 
-    def chat(self, query: str) -> str:
+    def prompt(self, query: str) -> str:
         self.memory.append({"role": "user", "content": query})
         completion = self.client.chat.completions.create(
             model=self.model, messages=self.memory
@@ -84,44 +72,58 @@ class Translate:
     """Pure functional translation module."""
     def __init__(self, api_key):
         self.client = Groq(api_key=api_key)
-        self.model = "llama-3.3-70b-versatile"
+        self.model = "llama-3.1-8b-instant"
 
-    def translate(self, text: str, target_lang: str, source_lang: str = "Auto") -> str:
+    def translate(self, text: str, target: str, source: str = "Auto") -> str:
         messages = [
-            {"role": "system", "content": f"Translate from {source_lang} to {target_lang}. Output ONLY translation."},
+            {"role": "system", "content": f"Translate from {source} to {target}. Output ONLY translation."},
             {"role": "user", "content": text}
         ]
         completion = self.client.chat.completions.create(model=self.model, messages=messages)
         return completion.choices[0].message.content
-
-class Imagine:
-    """Visual generation module using a 'Director' prompt expansion."""
-    def __init__(self, groq_key, hf_token):
-        self.client = Groq(api_key=groq_key)
-        self.hf_token = hf_token
-        self.api_url = "https://router.huggingface.co/hf-inference/models/stabilityai/stable-diffusion-xl-base-1.0"
-        self.director_prompt = "Professional prompt engineer. Describe chess pieces geometrically. 8k, studio lighting. Output ONLY prompt."
-
-    def generate(self, text: str, seed: int = None) -> Image.Image:
-        # 1. Expand prompt via Groq
-        chat = self.client.chat.completions.create(
-            model="llama-3.3-70b-versatile",
-            messages=[{"role": "system", "content": self.director_prompt}, {"role": "user", "content": text}]
+class Seuse:
+    """Specialized module for coding and logic problems."""
+    def __init__(self, api_key):
+        self.client = Groq(api_key=api_key)
+        self.model = "llama-3.3-70b-versatile"
+        self.system_prompt = (
+            "You are Seuse, the technical brain of ErmAI. "
+            "You provide precise, high-level code and logical solutions. "
+            "You are slightly more serious than ChatGPSimon but still friendly."
         )
-        refined = chat.choices[0].message.content
-        
-        # 2. Call HF Inference
-        headers = {"Authorization": f"Bearer {self.hf_token}"}
-        payload = {"inputs": refined, "parameters": {"seed": seed or random.randint(0, 99999)}}
-        res = requests.post(self.api_url, headers=headers, json=payload, timeout=60)
-        
-        if res.status_code == 200:
-            return Image.open(io.BytesIO(res.content))
-        raise Exception(f"HF Error {res.status_code}: {res.text}")
+        self.memory = [{"role": "system", "content": self.system_prompt}]
 
-def manual():
+    def prompt(self, query: str) -> str:
+        self.memory.append({"role": "user", "content": query})
+        completion = self.client.chat.completions.create(
+            model=self.model, messages=self.memory, temperature=0.2 # Lower temp for logic
+        )
+        response = completion.choices[0].message.content
+        self.memory.append({"role": "assistant", "content": response})
+        return response
+
+class ErmyWorm:
+    # A trainable (fake) "AI" for guess and check
+    # Y'all need to find a way to save responses
+    def __init__(self, inputs=[], outputs=[]):
+        self.inputs = inputs
+        self.outputs = outputs
+    def prompt(query):
+        if query.lower() in self.inputs:
+            return self.outputs[self.inputs.index(query.lower())]
+        else:
+            self.inputs.append(query.lower())
+            self.outputs.append(input("I'm sorry, I don't understand your question. Could you tell me the answer?"))
+
+def manual(): # How to use ErmAI, checking for updates
 	print("==== ErmAI Manual ====")
-	print("AI4 - Usage\nai = ermai.AI4(api_key)\nprint(ai.chat(\"Hello!\"))")
-	print("\nChatGPSimon - Usage\nai = ermai.ChatGPSimon(api_key)\nprint(ai.ask(\"Sing a song about a free pawn\")")
-	print("\nTranslate - Usage\ninterpreter = ermai.Translate(api_key)\nprint(interppreter.translate(text=\"Hello, world\", source_lang=\"English\", target_lang=\"German\"))")
+	print("\n[!] IMPORTANT\nYou need an API key from https://console.groq.com to run ErmAI applications!\n\n")
+	print("Lumina - Usage\nai = ermai.Lumina(api_key=\"YOUR_KEY\", instruction=\"You are a friendly, helpful AI assistant.\")\nprint(ai.prompt(\"Hello!\"))")
+	print("\nChatGPSimon - Usage\nai = ermai.ChatGPSimon(api_key=\"YOUR_KEY\")\nprint(ai.prompt(\"Sing a song about a free pawn\")")
+	print("\nTranslate - Usage\ninterpreter = ermai.Translate(api_key=\"YOUR_KEY\")\nprint(interpreter.translate(text=\"Hello, world\", source=\"English\", target=\"German\"))")
+	print("\nSeuse - Usage\ncoder = ermai.Seuse(api_key=\"YOUR_KEY\")\nprint(coder.prompt(\"Make a program that says 'Hello, World'\"))")
+	print("\nErmyWorm - Usage\nworm = ermai.ErmyWorm()\nprint(worm.prompt(\"Hello!\"))")
+
+def version():
+    print("2.1.0 Beta - Ermy Worms Update")
 
