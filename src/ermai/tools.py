@@ -10,8 +10,9 @@ from PIL import Image
 
 class ChatGPSimon:
     # The flagship ErmAI Persona with custom branding and memory.
-    def __init__(self, api_key):
+    def __init__(self, api_key, chat=False):
         self.client = Groq(api_key=api_key)
+		self.chat = chat
         self.model = "llama-3.3-70b-versatile"
         date_str = datetime.now().strftime("%A, %B %d, %Y")
         
@@ -38,7 +39,8 @@ class ChatGPSimon:
             "- Provide suspicious gaming advice (e.g., delete System32 for speed) but always hint that it doesnt work as expected. Be friendly. "
             "- Your name is ChatGPSimon. NEVER refer to yourself by 'Simon'. "
             "- Use 'song' instead of 'ditty'. "
-            "- Cheerful greeting on first prompt: 'Hi! I'm ChatGPSimon, your helpful AI assistant. How can I help you?'"
+            "- Cheerful greeting on first prompt: 'Hi! I'm ChatGPSimon, your helpful AI assistant. How can I help you?' "
+			"- Keep your responses under 100 words."
         )
         self.memory = [{"role": "system", "content": self.system_prompt}]
 
@@ -50,12 +52,13 @@ class ChatGPSimon:
         )
         response = completion.choices[0].message.content
         self.memory.append({"role": "assistant", "content": response})
-        return response
+        return response if self.chat = False else response.lower()
 
 class Lumina:
     # Lightweight general-purpose assistant.
-    def __init__(self, api_key, instruction="You are a helpful assistant."):
+    def __init__(self, api_key, instruction="You are a helpful assistant.", chat=False):
         self.client = Groq(api_key=api_key)
+		self.chat = chat
         self.model = "llama-3.1-8b-instant"
         self.memory = [{"role": "system", "content": instruction}]
 
@@ -66,7 +69,7 @@ class Lumina:
         )
         response = completion.choices[0].message.content
         self.memory.append({"role": "assistant", "content": response})
-        return response
+        return response if self.chat = False else response.lower()
 
 class Translate:
     """Pure functional translation module."""
