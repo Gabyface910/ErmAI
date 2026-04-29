@@ -52,7 +52,7 @@ class ChatGPSimon:
         )
         response = completion.choices[0].message.content
         self.memory.append({"role": "assistant", "content": response})
-        if self.chat = False:
+        if self.chat == False:
             return response
         else:
             return response.lower()
@@ -72,7 +72,7 @@ class Lumina:
         )
         response = completion.choices[0].message.content
         self.memory.append({"role": "assistant", "content": response})
-        if self.chat = False:
+        if self.chat == False:
             return response
         else:
             return response.lower()
