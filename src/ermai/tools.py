@@ -99,5 +99,5 @@ def manual(): # How to use ErmAI, checking for updates
 	print("\nTranslate - Usage\ninterpreter = ermai.Translate(api_key=\"YOUR_KEY\")\nprint(interpreter.translate(text=\"Hello, world\", source=\"English\", target=\"German\"))")
 
 def version():
-    print("2.1.0 Beta - Ermy Worms Update")
+    print("2.2.5 - Billy Update")
 
