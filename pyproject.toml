@@ -11,7 +11,7 @@ requires-python = ">=3.7"
 dependencies = [
     "requests",
     "groq",
-    "Pillow"
+    "google-genai"
 ]
 
 [tool.setuptools.packages.find]
