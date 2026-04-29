@@ -40,40 +40,36 @@ class Billy:
             json.dump(history, f)
 
     def code(self, user_input):
-        """The core brain of Billy."""
+        """The core brain of Billy (SDK V2 Compliant)."""
         history = self._load_memory()
         
-        # Add the user's new message to the local history
-        history.append({"role": "user", "content": str(user_input)})
+        # SDK FIX: 'content' must be 'parts' and it must be a list of dicts/strings
+        history.append({"role": "user", "parts": [{"text": user_input}]})
         
-        
+        print(f"Billy is thinking...")
         
         try:
             response = self.client.models.generate_content(
                 model=self.model_id,
                 config=types.GenerateContentConfig(
                     system_instruction=(
-                        "You are ErmAI Billy, a friendly, ultra-efficient coding buddy. "
-                        "Slogan: 'Sus but Supreme.' You live on a Raspberry Pi 3B+. "
-                        "Keep answers concise. Use local tools. Be a helpful peer."
+                        "You are ErmAI Billy, a friendly coding buddy. "
+                        "Be a helpful peer."
                     ),
                     temperature=0.1,
-                    thinking_config=types.ThinkingConfig(include_thoughts=False)
                 ),
                 contents=history
             )
             
             billy_res = response.text
             
-            # Update history
-            history.append({"role": "model", "content": billy_res})
+            # SDK FIX: Store Billy's response in the same format
+            history.append({"role": "model", "parts": [{"text": billy_res}]})
             self._save_memory(history)
             
-            # Respect the 10 RPM free tier limit
             time.sleep(6)
-            
             return billy_res
 
         except Exception as e:
+            # If things still fail, let's see exactly what Billy is sending
             return f"Billy: Oof, something went 'sus'. Error: {str(e)}"
-
