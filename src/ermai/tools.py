@@ -12,7 +12,7 @@ class ChatGPSimon:
     # The flagship ErmAI Persona with custom branding and memory.
     def __init__(self, api_key, chat=False):
         self.client = Groq(api_key=api_key)
-		self.chat = chat
+        self.chat = chat
         self.model = "llama-3.3-70b-versatile"
         date_str = datetime.now().strftime("%A, %B %d, %Y")
         
