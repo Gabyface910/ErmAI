@@ -44,9 +44,9 @@ class Billy:
         history = self._load_memory()
         
         # Add the user's new message to the local history
-        history.append({"role": "user", "content": user_input})
+        history.append({"role": "user", "content": str(user_input)})
         
-        print(f"Billy is thinking... (Gemma 4 @ 10 RPM)")
+        
         
         try:
             response = self.client.models.generate_content(
