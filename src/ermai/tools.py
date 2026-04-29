@@ -61,7 +61,7 @@ class Lumina:
     # Lightweight general-purpose assistant.
     def __init__(self, api_key, instruction="You are a helpful assistant.", chat=False):
         self.client = Groq(api_key=api_key)
-		self.chat = chat
+        self.chat = chat
         self.model = "llama-3.1-8b-instant"
         self.memory = [{"role": "system", "content": instruction}]
 
