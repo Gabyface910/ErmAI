@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "ermai"
-version = "2.1.0"
+version = "2.2.0"
 description = "Official ErmAI Python Library"
 authors = [{name = "Gabyface910"}]
 requires-python = ">=3.7"
