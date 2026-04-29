@@ -52,7 +52,10 @@ class ChatGPSimon:
         )
         response = completion.choices[0].message.content
         self.memory.append({"role": "assistant", "content": response})
-        return response if self.chat = False else response.lower()
+        if self.chat = False:
+            return response
+        else:
+            return response.lower()
 
 class Lumina:
     # Lightweight general-purpose assistant.
@@ -69,7 +72,10 @@ class Lumina:
         )
         response = completion.choices[0].message.content
         self.memory.append({"role": "assistant", "content": response})
-        return response if self.chat = False else response.lower()
+        if self.chat = False:
+            return response
+        else:
+            return response.lower()
 
 class Translate:
     """Pure functional translation module."""
@@ -84,39 +90,6 @@ class Translate:
         ]
         completion = self.client.chat.completions.create(model=self.model, messages=messages)
         return completion.choices[0].message.content
-class Seuse:
-    """Specialized module for coding and logic problems."""
-    def __init__(self, api_key):
-        self.client = Groq(api_key=api_key)
-        self.model = "llama-3.3-70b-versatile"
-        self.system_prompt = (
-            "You are Seuse, the technical brain of ErmAI. "
-            "You provide precise, high-level code and logical solutions. "
-            "You are slightly more serious than ChatGPSimon but still friendly."
-        )
-        self.memory = [{"role": "system", "content": self.system_prompt}]
-
-    def prompt(self, query: str) -> str:
-        self.memory.append({"role": "user", "content": query})
-        completion = self.client.chat.completions.create(
-            model=self.model, messages=self.memory, temperature=0.2 # Lower temp for logic
-        )
-        response = completion.choices[0].message.content
-        self.memory.append({"role": "assistant", "content": response})
-        return response
-
-class ErmyWorm:
-    # A trainable (fake) "AI" for guess and check
-    # Y'all need to find a way to save responses
-    def __init__(self, inputs=[], outputs=[]):
-        self.inputs = inputs
-        self.outputs = outputs
-    def prompt(query):
-        if query.lower() in self.inputs:
-            return self.outputs[self.inputs.index(query.lower())]
-        else:
-            self.inputs.append(query.lower())
-            self.outputs.append(input("I'm sorry, I don't understand your question. Could you tell me the answer?"))
 
 def manual(): # How to use ErmAI, checking for updates
 	print("==== ErmAI Manual ====")
@@ -124,8 +97,6 @@ def manual(): # How to use ErmAI, checking for updates
 	print("Lumina - Usage\nai = ermai.Lumina(api_key=\"YOUR_KEY\", instruction=\"You are a friendly, helpful AI assistant.\")\nprint(ai.prompt(\"Hello!\"))")
 	print("\nChatGPSimon - Usage\nai = ermai.ChatGPSimon(api_key=\"YOUR_KEY\")\nprint(ai.prompt(\"Sing a song about a free pawn\")")
 	print("\nTranslate - Usage\ninterpreter = ermai.Translate(api_key=\"YOUR_KEY\")\nprint(interpreter.translate(text=\"Hello, world\", source=\"English\", target=\"German\"))")
-	print("\nSeuse - Usage\ncoder = ermai.Seuse(api_key=\"YOUR_KEY\")\nprint(coder.prompt(\"Make a program that says 'Hello, World'\"))")
-	print("\nErmyWorm - Usage\nworm = ermai.ErmyWorm()\nprint(worm.prompt(\"Hello!\"))")
 
 def version():
     print("2.1.0 Beta - Ermy Worms Update")
