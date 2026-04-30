@@ -1,5 +1,8 @@
-# ErmAI 
-is an easy Python AI SDK built on Groq
+<div align="center">
+
+  ![ErmAI icon](https://github.com/Gabyface910/ErmAI/blob/main/ErmAI-Logo2.png?raw=true)
+  # The new standard for AI in Python
+</div>
 
 Visit the [Wiki](https://github.com/Gabyface910/ErmAI/wiki) for more info!
 
