@@ -3,6 +3,15 @@ is an easy Python AI SDK built on Groq
 
 Visit the [Wiki](https://github.com/Gabyface910/ErmAI/wiki) for more info!
 
+# Quick Start
+```python3
+import ermai
+ai = ermai.ChatGPSimon(
+  api_key="YOUR_GROQ_KEY"
+)
+print(ai.prompt("Hello!"))
+```
+
 ## Have fun!
 
 **Credits:**
