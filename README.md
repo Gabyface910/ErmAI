@@ -1,6 +1,6 @@
 <div align="center">
 
-  ![ErmAI icon](https://github.com/Gabyface910/ErmAI/blob/main/ErmAI-Logo2.png?raw=true)
+  [![ErmAI icon](https://github.com/Gabyface910/ErmAI/blob/main/ErmAI-Logo2.png?raw=true)](#)
   # The new standard for AI in Python
   #### Integrate your AI with ErmAI. Choose from models like ChatGPSimon and Lumina. Need coding help? Billy is here to save the day! Ask Billy what you want to code and he will help you achieve it!
 </div>
